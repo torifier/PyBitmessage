@@ -126,7 +126,7 @@ bash shell script to post pictures :                        post-picture.sh
 
 #!/bin/bash
 
-./post-picture.sh    -e ./pic/*    -t BM-2cVE8v7L4qb14R5iU2no9oizkx8MpuvRZ7   -s " look at this picture !  "  --edetect --ttl='60*24*4'  
+./post-picture.sh    -e ./payload/*    -t BM-2cVE8v7L4qb14R5iU2no9oizkx8MpuvRZ7   -s "look at this picture!"  --edetect --ttl='60*24*4'  
 
 
 
