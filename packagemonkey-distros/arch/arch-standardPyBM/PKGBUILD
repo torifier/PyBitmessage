@@ -5,7 +5,7 @@
 # This file is named PKGBUILD  from   https://aur.archlinux.org/packages/pybitmessage-git
 
 
-# currently the branch "0.6" is newer than MASTER, so manual download might be better for you, or a manual git update.
+# currently (July 2016) the branch "0.6" is newer than MASTER, so manual download might be better for you, or a manual git update.
 
 #  https://github.com/Bitmessage/PyBitmessage.git
 #  git@github.com:Bitmessage/PyBitmessage.git
@@ -30,11 +30,11 @@ optdepends=('mpg123: MP3 sounds support'
             'alsa-utils: WAV sounds support')
 url="https://github.com/Bitmessage/PyBitmessage"
 license=('MIT')
-source=("${pkgname}::git+https://github.com/Bitmessage/PyBitmessage.git")
-#            "bitmsglib_location.patch")
-sha256sums=('SKIP')
-#            '47c6e708ca0158189ae738440c908ab3a1f4ad383311badd70077b9406123b7a')
-# patch is gone
+source=("${pkgname}::git+https://github.com/Bitmessage/PyBitmessage.git"
+           "bitmsglib_location.patch")
+sha256sums=('SKIP'
+            '47c6e708ca0158189ae738440c908ab3a1f4ad383311badd70077b9406123b7a')
+# patch is in snapshot
 
 provides=('pybitmessage')
 
@@ -49,8 +49,8 @@ prepare() {
   chmod +x pybitmessage.sh
 
   msg 'Patching bitmsglib location...'
-#  patch -d "$pkgname" -p1 <bitmsglib_location.patch
-# no longer there 
+  patch -d "$pkgname" -p1 <bitmsglib_location.patch
+# comes with AUR snapshot 
 
   cd "$pkgname"
 
