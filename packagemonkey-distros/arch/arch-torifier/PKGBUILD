@@ -4,7 +4,7 @@
 
 #  this file is PKGBUILD for torifier's fork of pyBM
 
-#  to "makepkg" this fork of pyBM, you need this very file PKGBUILD only, no patch files nor anything else is required.
+#  to "makepkg" this fork of pyBM, you need this very file PKGBUILD only, neither patch files nor anything else is required.
 
 
 
