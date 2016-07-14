@@ -1,1 +1,2 @@
-# this is just a required dummy shell script 
+#        this is just a required dummy shell script 
+echo     this is just a required dummy shell script 
