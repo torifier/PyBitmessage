@@ -1,6 +1,10 @@
 #!/bin/bash
 
 
+#      run   this  file   on Linux  in order to post a picture  on   BITmessage !   works very cool !
+
+
+
 for file in ./payload/*
 do
       ./BM-API-client.py  -e"${file}"   -s 'pic sent via API :   '  --es  --ttl='60*24*1'   -uUSER1 -pPASSWORD2
