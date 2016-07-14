@@ -1,3 +1,121 @@
-PKGBUILD of this fork
+# Maintainer : torifier
 
-soon to come!
+# https://github.com/torifier/PyBitmessage.git
+
+
+
+
+# Maintainer: David Parrish <daveparrish@tutanota.com>
+# Maintainer: David Parrish <BM-2cU1Bk3fXVo9VrGpo2YQFJ1it31gSuAy5j>
+# modded by   torifier :     BM-2cV2VWiWDwz1dRxw8xrjnfRQRUGMJi9GJi
+
+# This file is named PKGBUILD  from   https://aur.archlinux.org/packages/pybitmessage-git
+#                                     https://aur.archlinux.org/cgit/aur.git/?h=pybitmessage-git
+
+
+#                                     https://github.com/Bitmessage/PyBitmessage.git
+#                                         git@github.com:Bitmessage/PyBitmessage.git 
+
+
+# workflow to install pyBitmessage into an Arch Linux or Arch derivate:
+
+#   1. download a full snapshot  https://aur.archlinux.org/cgit/aur.git/snapshot/pybitmessage-git.tar.gz   und decompress it into a sub-dir
+#   2. makepkg   (issued inside sub-dir with the PKGBUILD file  *WITH*  patches asf. from  pybitmessage-git.tar.gz)
+#   3. then use the "pamac" GUI to install with root password the just made     pybitmessage-git-0.6.0.r1.gaf0dfdc-1-x86_64.pkg.tar.xz
+
+#   in other words: PKGBUILD *alone* is not enough, contrary to urban legend.
+
+
+# currently (July 2016) the branch "0.6" is newer than MASTER, so manual download might be better for you, 
+# or a manual git update to the desired branch.
+
+
+pkgname=pybitmessage-T-git
+pkgver=0.6.0.r36.gd70e739
+pkgrel=1
+pkgdesc="Decentralized and trustless P2P communication protocol for sending encrypted messages to a single person or to multiple subscribers - modded by torifier"
+arch=('i686' 'x86_64')
+depends=('openssl' 'python2' 'python2-pyqt4' 'qt4' 'sqlite')
+optdepends=('mpg123: MP3 sounds support'
+            'alsa-utils: WAV sounds support')
+url="https://github.com/torifier/PyBitmessage"
+license=('MIT')
+
+
+
+source=("${pkgname}::git+https://github.com/torifier/PyBitmessage" )
+#                                              "bitmsglib_location.patch")
+# FIXME:            
+
+sha256sums=('SKIP' )
+#            '47c6e708ca0158189ae738440c908ab3a1f4ad383311badd70077b9406123b7a')
+
+# patch is at    https://aur.archlinux.org/cgit/aur.git/tree/bitmsglib_location.patch?h=pybitmessage-git
+# FIXME: 
+
+
+provides=('pybitmessage')
+
+pkgver() {
+  cd "$pkgname"
+  git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+  msg 'Creating shell executable'
+  echo -e '#!/bin/sh\ncd /usr/share/'${pkgname}'\nexec python2 bitmessagemain.py' > pybitmessage.sh
+  chmod +x pybitmessage.sh
+
+
+#  useful for windows only, unwanted here  
+#  msg 'Patching bitmsglib location...'
+#  patch -d "$pkgname" -p1 <bitmsglib_location.patch
+
+# FIXME:  patch must be downed from the full snapshot
+
+
+
+
+  cd "$pkgname"
+
+  msg 'Fixing Python version...  python to  python2  to avoid python3.5 trouble   '
+  find . -type f -print0 | xargs -0 sed -i 's#/usr/bin/python$#/usr/bin/python2#g'
+  find . -type f -print0 | xargs -0 sed -i 's#/usr/bin/env python$#/usr/bin/env python2#g'
+}
+
+build() {
+  cd "$srcdir/$pkgname/src/bitmsghash"
+  make
+}
+
+package() {
+  cd "$pkgname"
+
+  msg 'Installing shared files...'
+  mkdir -p "$pkgdir"/usr/share/$pkgname
+  cp -R src/* "$pkgdir"/usr/share/$pkgname
+  # exclude bitmsghash.so and bitmsghash.o  - goes to lib
+  rm "$pkgdir"/usr/share/$pkgname/bitmsghash/bitmsghash.so
+  rm "$pkgdir"/usr/share/$pkgname/bitmsghash/bitmsghash.o
+
+  msg 'Installing lib files...'
+  mkdir -p "$pkgdir"/usr/lib/$pkgname
+  cp -R src/bitmsghash/bitmsghash.so "$pkgdir"/usr/lib/$pkgname
+
+  msg 'Installing desktop icons...'
+  install -D -m644 desktop/pybitmessage.desktop "$pkgdir/usr/share/applications/pybitmessage.desktop"
+  install -D -m644 src/images/can-icon-24px.png "$pkgdir/usr/share/icons/hicolor/24x24/apps/pybitmessage.png"
+  install -D -m644 desktop/can-icon.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/pybitmessage.svg"
+  install -D -m644 desktop/can-icon.svg "$pkgdir/usr/share/pixmaps/pybitmessage.svg"
+
+  msg 'Installing executable...'
+  install -D -m755 $srcdir/pybitmessage.sh "$pkgdir/usr/bin/pybitmessage"
+
+  msg 'Installing man page...'
+  mkdir -p "$pkgdir/usr/share/man/man1"
+  install -m644 man/pybitmessage.1.gz "$pkgdir/usr/share/man/man1"
+
+  msg 'Installing license...'
+  mkdir -p "$pkgdir/usr/share/licenses/$pkgname"
+  install -D -m644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
