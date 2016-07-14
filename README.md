@@ -15,8 +15,9 @@ Development
 Bitmessage is a collaborative project. You are welcome to submit pull requests -
 although if you plan to put a non-trivial amount of work into coding new
 features, it is recommended that you first solicit feedback on the DevTalk
-pseudo-mailing list:            BM-2D9QKN4teYRvoq2fyzpiftPh9WP9qggtzh
+pseudo-mailing list ("subscribe"): BM-2D9QKN4teYRvoq2fyzpiftPh9WP9qggtzh
 That list, however, is inactive by 2016.
+
 Rather, join chan "bitmessage", BM-2cWy7cvHoq3f1rYMerRJp8PT653jjSuEdY
 
 
