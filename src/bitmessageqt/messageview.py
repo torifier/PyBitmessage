@@ -121,4 +121,18 @@ class MessageView(QtGui.QTextBrowser):
         self.html.allow_picture = True
         self.html.feed(data)
         self.html.close()
-        self.showPlain()
+        
+## useroption - modify to your liking :   view HTML immediately without extra click      
+
+# with extra click         
+#        self.showPlain()
+
+
+# without extra click  - uncomment your preferred variant
+# 
+         if self.html.has_html:
+           self.showHTML()
+         else:
+           self.showPlain()
+
+
