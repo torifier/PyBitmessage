@@ -8,7 +8,7 @@ In the sourcecode, search for the term "useroption". there you can modify the .p
    
 2. Generally clarified some README stuff
 
-3. Better text for join chan/ create chan    src/bitmessageqt/newchandialog.py
+3. Better text for join chan / create chan    src/bitmessageqt/newchandialog.py
 
 
 
