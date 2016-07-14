@@ -1,6 +1,6 @@
 Bitmessage API mini client v1.28
 
-Usage: apiclient.py [options] [1st_line_of_message] [2nd_line_of_message]...
+Usage: BM-API-client.py [options] [1st_line_of_message] [2nd_line_of_message]...
 
 Options:
   --version     show program's version number and exit
