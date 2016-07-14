@@ -1,7 +1,7 @@
 Change log and notes on the torifier fork
 
 
-In the sourcecode, yoou can search for the term "useroption". there you can modify the .py source to improve some features. Example 1:
+In the sourcecode, search for the term "useroption". there you can modify the .py source to improve some features. Example 1:
 
 1. In rc/bitmessageqt/messageview.py  in the last line, change self.showPlain() to view HTML immediately.
    Change back if you want more security. This spot can be found searching for searchterm "useroption" across the src tree.
