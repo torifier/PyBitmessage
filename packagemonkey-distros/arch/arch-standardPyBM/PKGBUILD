@@ -1,6 +1,6 @@
 # Maintainer: David Parrish <daveparrish@tutanota.com>
 # Maintainer: David Parrish <BM-2cU1Bk3fXVo9VrGpo2YQFJ1it31gSuAy5j>
-# fixed by  :                BM-2cV2VWiWDwz1dRxw8xrjnfRQRUGMJi9GJi
+
 
 # This file is named PKGBUILD  from   https://aur.archlinux.org/packages/pybitmessage-git
 
@@ -14,8 +14,9 @@
 
 # workflow in Arch Linux & derivates :  
 
-#   1. makepkg   (issued inside sub-dir with this PKGBUILD file)
-#   2. then use the "pamac" GUI to install with root password the just made     pybitmessage-git-0.6.0.r1.gaf0dfdc-1-x86_64.pkg.tar.xz
+#   1. download the full snapshot from AUR, including patches and all, and untar it.
+#   2. makepkg   (issued inside sub-dir with this PKGBUILD, patch file)
+#   3. then use the "pamac" GUI to install with root password the just made     pybitmessage-git-0.6.0.r1.gaf0dfdc-1-x86_64.pkg.tar.xz
 
 
 
