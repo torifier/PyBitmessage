@@ -1,10 +1,18 @@
-# Maintainer : torifier
+#  Maintainer : torifier
 
-# https://github.com/torifier/PyBitmessage.git
+#  https://github.com/torifier/PyBitmessage.git
 
-# this file is PKGBUILD for torifiers fork of pyBM
+#  this file is PKGBUILD for torifiers fork of pyBM
 
-# to makepkg for this fork, you need the single file PKGBUILD only, no patch files or anything else is required.
+#  to "makepkg" this fork of pyBM, you need this very file PKGBUILD only, no patch files or anything else is required.
+
+
+
+#  In other words: This is the seed file and very important. So far - to my knowledge -  
+#  neither FBI nor anyone has compromised this fork yet (beyond it's former state  ;-) ). 
+#  (canary statement to be expanded with link later. FIXME) 
+
+
 
 
 
