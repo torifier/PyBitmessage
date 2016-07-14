@@ -18,7 +18,8 @@ features, it is recommended that you first solicit feedback on the DevTalk
 pseudo-mailing list ("subscribe"): BM-2D9QKN4teYRvoq2fyzpiftPh9WP9qggtzh
 That list, however, is inactive by 2016.
 
-Rather, join chan "bitmessage", BM-2cWy7cvHoq3f1rYMerRJp8PT653jjSuEdY
+Rather, join chan "bitmessage", BM-2cWy7cvHoq3f1rYMerRJp8PT653jjSuEdY   
+which is visible here as well : http://beamstat.com/chan/bitmessage
 
 
 References
