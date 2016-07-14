@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Generates packaging
+# Generates packaging using packagemonkey. Currently this does not produce functional output for all distros and can be ignored. 
+# No need to run this script. Find manually maintained packaging for your distro instead, 
+# e.g. https://aur.archlinux.org/packages/pybitmessage-git
 
 rm -f Makefile rpmpackage/*.spec
 
