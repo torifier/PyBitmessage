@@ -1,3 +1,9 @@
+This fork is geared towards Arch Linux and aims at some minor usability goals and improved documentation e.g. about BM API etc..
+
+
+
+
+
 PyBitmessage
 ============
 
