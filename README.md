@@ -1,4 +1,3 @@
-# PyBitmessage forked for fun
+live preview : https://beamstat.com/chan/bitmessage
 
-info: https://beamstat.com/chan/bitmessage
 Find more manuals in their /man directory.
