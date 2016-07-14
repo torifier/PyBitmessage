@@ -1,1 +1,3 @@
 this BM was sent via the BM-API.
+
+put picture files *.jpg  etc.  in this directory, then   ../post-picture.sh  will work and post them onto the BM network
