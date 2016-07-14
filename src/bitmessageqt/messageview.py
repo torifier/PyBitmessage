@@ -130,9 +130,7 @@ class MessageView(QtGui.QTextBrowser):
 
 # without extra click  - uncomment your preferred variant
 # 
-         if self.html.has_html:
+        if self.html.has_html:
            self.showHTML()
-         else:
-           self.showPlain()
-
-
+        else:
+           self.showPlain()   
