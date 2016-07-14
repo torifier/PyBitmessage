@@ -2,7 +2,14 @@
 
 # https://github.com/torifier/PyBitmessage.git
 
+# this file is PKGBUILD for torifiers fork of pyBM
 
+# to makepkg for this fork, you need the single file PKGBUILD only, no patch files or anything else is required.
+
+
+
+
+# -----------------------------------------------------------------------------------
 
 
 # Maintainer: David Parrish <daveparrish@tutanota.com>
