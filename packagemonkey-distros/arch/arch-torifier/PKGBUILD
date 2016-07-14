@@ -38,7 +38,7 @@
 
 
 pkgname=pybitmessage-T-git
-pkgver=0.6.0.r36.gd70e739
+pkgver=0.6.0.r82.gaae867b
 pkgrel=1
 pkgdesc="Decentralized and trustless P2P communication protocol for sending encrypted messages to a single person or to multiple subscribers - modded by torifier"
 arch=('i686' 'x86_64')
