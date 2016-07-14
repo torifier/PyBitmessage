@@ -1,0 +1,39 @@
+     
+      /src/bitmessagecli.py   is a tool for the BM API :
+     
+     
+     -------------------------------------------------------------------------
+     |        https://github.com/Dokument/PyBitmessage-Daemon                |
+     |-----------------------------------------------------------------------|
+     | Command                | Description                                  |
+     |------------------------|----------------------------------------------|
+     | help                   | This help file.                              |
+     | apiTest                | Tests the API                                |
+     | addInfo                | Returns address information (If valid)       |
+     | bmSettings             | BitMessage settings                          |
+     | exit                   | Use anytime to return to main menu           |
+     | quit                   | Quits the program                            |
+     |------------------------|----------------------------------------------|
+     | listAddresses          | Lists all of the users addresses             |
+     | generateAddress        | Generates a new address                      |
+     | getAddress             | Get determinist address from passphrase      |
+     |------------------------|----------------------------------------------|
+     | listAddressBookEntries | Lists entries from the Address Book          |
+     | addAddressBookEntry    | Add address to the Address Book              |
+     | deleteAddressBookEntry | Deletes address from the Address Book        |
+     |------------------------|----------------------------------------------|
+     | subscribe              | Subscribes to an address                     |
+     | unsubscribe            | Unsubscribes from an address                 |
+     |------------------------|----------------------------------------------|
+     | create                 | Creates a channel                            |
+     | join                   | Joins a channel                              |
+     | leave                  | Leaves a channel                             |
+     |------------------------|----------------------------------------------|
+     | inbox                  | Lists the message information for the inbox  |
+     | outbox                 | Lists the message information for the outbox |
+     | send                   | Send a new message or broadcast              |
+     | unread                 | Lists all unread inbox messages              |
+     | read                   | Reads a message from the inbox or outbox     |
+     | save                   | Saves message to text file                   |
+     | delete                 | Deletes a message or all messages            |
+     -------------------------------------------------------------------------
