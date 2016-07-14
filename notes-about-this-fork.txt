@@ -1,0 +1,11 @@
+Change log and notes on the torifier fork
+
+1. in rc/bitmessageqt/messageview.py  in the last line, change self.showPlain() to view HTML immediately.
+   change back if you want more security 
+   
+2. 
+
+
+
+
+
