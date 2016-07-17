@@ -19,7 +19,7 @@ import string
 
 
 subject = 'subjectline-1 -- some_SPAM_or_whatever eeeee EEEEEEEEEEE xxxx'
-body    = 'body-1 11111 22222 33333 44444 55555'
+body    = 'Gr1----11 22222 33333 44444 55555 SPAMwordwww'
 
 blockMessage = False
 
@@ -44,7 +44,7 @@ ZTNFL TNCFB FPIOP FGQAS YRLZS SHBMV NUQIW FKXNJ QMPVS TCGVJ
 TKJOP DUYQM NNKWZ KPNHZ VTZLT JGUPB LEGKZ WATEV AWHAT EVER0
 '''
 
-#t=subject                                                                     # text to filter now
+t="t nothing"                                                               # text to filter now
 
 #print t
 
@@ -55,8 +55,9 @@ s2=0    # len subj
 p=0.0
 s=False # = SPAM
 
+b100='---'
 
-print subject
+print "subj" ,  subject
 print " "
 print body
 print " "
@@ -65,6 +66,8 @@ print " "
 #print string.digits
 #print string.uppercase
 
+
+
 ################################### begin of filter regex part to put in       src/class_objectProcessor.py 
 
 # USEROPTION SpamFilter   -  enable or disable any options by commenting them out with the letter '#'
@@ -72,43 +75,59 @@ print " "
 s=False # SPAM ? true or false
 c=0     # count
 
+#body='this is no spam mate sss 333'  #FIXME remove it
 s2=len(subject)
 b2=len(body)
 
+b100 =body[0:100]           # first 100 chars to test
+s= str.isspace(b100)        # only whitespace              s= b100.str.isspace()  
+
+if not s : 
+    b100s=     b100.strip(None)   # ' '          # strip lead+end whitespace
+    s =        b100s.isdigit()                   # pure number spam without SPACE
+    if not s :
+        b100s=     b100.replace(' ', '')         # kill whitespace
+        s =        b100s.isdigit()               # number spam with SPACEs  +
+        if not s : 
+            if b100s.isupper() : s=True          # all uppercase SPAM e.g. A1  FIXME   
+
+
 #FIXME                                                                         # filter cyrillic & China charsets
 
-#t2=string.upper(subject)
-s3=str.upper   (subject)
-c=str.count    (s3, 'E') ## , 1 , (3*5))                                       # both 3 *-  9++
-p = c / s2
-if p < 0.05                   :     s=True                                     # 5% is too few 'E' for English, average is 13%
-print "percentage letter E is present "   , c 
 
 
-if          s2 == 32           :   s = True                                    # a=string.count(s, sub[, start[, end]])
-elif        b2  > 4000         :   s = True                                    # want small BM only, less than 4KByte
-
-if not s:
-    if          b2 >= (3*5)    :   c=str.count(body, ' ', 1 , (3*5))           # both 3 *-  9++
-    if           c == (3-1)    :   s=True                                      # group of 5 then space
-    elif t[1*5]    ==' '       :   s=True     #FIXME ... 5 10 15               # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
+if not s:    
+    #s3=string.upper(subject)
+    s3=str.upper    (subject)
+    c =str.count    (s3, 'E') ## , 1 , (3*5))                                      # both 3 *-  9++
+    p = c / s2
+    if p < 0.05 and s2 > 20        :     s=True                                     # 5% is too few 'E' for English, average is 13%
+    print "percentage letter E is present "   , c 
 
 
 if not s:
-    if   t[0]=='0' and t[-1] == '0'    : s=True                                #  0...0 
-    elif t[0]=='1'                     : s=True                                #FIXME
+    if            b2 >= (3*5)    :   c=str.count(b100, ' ', 1 , (3*5))           # both 3 *-  9++
+    if             c == (3-1)    :   s=True                                      # group of 5 then space
+    if s:
+        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False     #FIXME ... 5 10 15    3-->9      # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
+                           #      +6
+if not s:
+    if   subject[0]=='0' and subject[-1] == '0'    : s=True                    #  0...0 
+    elif subject[0]=='}'                           : s=True                    # FIXME kills non spam                             #FIXME
     #print t[0] 
 
 if not s:
-    if               t.isdigit()       : s=True    
-    elif t in     string.digits        : s=True                                # numbers only
+    if            s2 == 32           :   s = True  # FIXME kills too easily nonspam  # a=string.count(s, sub[, start[, end]])
+    elif          b2  > 4000         :   s = True                                    # want small BM only, less than 4KByte
 
+if not s: s = subject.isdigit()                                                # numbers only
+                                  
 if not s:
-    s3 = 'a SPAM:cat example word:cat!! whatever... stuff this might be a spamtext'
-    match = re.search(r'SPAM:\w\w\w', s3)
-                                                                               # after search() tests if it succeeded     \w  means  A-z  (word char)
-    if     match:  s=True      #print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
-    else:          s=False     #print 'did not find SPAM:___'
+    b100  = 'a SPAMword    FIXME  remove this line after testing'
+    match = re.search(r'SPAM\w\w\w', b100)
+    if     match : s = True                                                                               # after search() tests if it succeeded     \w  means  A-z  (word char)
+#   if     match : s=True      #print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
+#   else:          s=False     #print 'did not find SPAM:___'
 
     print "regex true or false : " , match    
     
@@ -117,7 +136,7 @@ if not s:
 if  s:    # SPAM was found
     subject="SPAMfilter kicked in here " + subject                             # prefix subject line
 #   subject=''                                                                 # delete subject line or just prefix
-#   body=''                                                                    # delete body
+#   body=''             #  FIXME remove #                                                       # delete body
     blockMessage = True
 ###############################################################                # end of filter regex to copy & paste
 
