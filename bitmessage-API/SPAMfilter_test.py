@@ -50,7 +50,9 @@ TKJOP DUYQM NNKWZ KPNHZ VTZLT JGUPB LEGKZ WATEV AWHAT EVER0
 
 a=0
 b=0
-c=0.0
+c=0
+s2=0    # len subj
+p=0.0
 s=False # = SPAM
 
 
@@ -64,33 +66,36 @@ print body
 ################################### begin of filter regex part to put in       src/class_objectProcessor.py 
 s=False # = SPAM
 
+s2=len(subject)
+b2=len(body)
+
 #FIXME                                                                         # filter cyrillic & China charsets
 
-
-
-a= len(subject)
-if         a == 32       :   s = True                                          # a=string.count(s, sub[, start[, end]])
-
-if len(body) >= (3*5)    :   a=str.count(body, ' ', 1 , (3*5))                 # both 3 *-  9++
-if         a == (3-1)    :   s=True                                            # group of 5 then space
-
-if t[1*5]    ==' '       :   s=True                                            # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
-
 #t2=string.upper(subject)
-t2=str.upper   (subject)
-a=str.count    (t2, 'E') ## , 1 , (3*5))                                       # both 3 *-  9++
-b=len          (t2)
-c = a / b
-if c < 0.05                  :     s=True                                      # 5% is too few 'E' for English, average is 13%
+s3=str.upper   (subject)
+c=str.count    (s3, 'E') ## , 1 , (3*5))                                       # both 3 *-  9++
+p = c / s2
+if p < 0.05                  :     s=True                                      # 5% is too few 'E' for English, average is 13%
 print "percentage letter E is present "   , c 
 
-                                                                               #   if a not ~ 13% E in msg
-if t[0]=='0' and t[-1] == '0' :    s=True                                      #  0...0 
-if t[0]=='1'                  :    s=True                                      #FIXME
- 
-print t[0]
-if t.isdigit()                : s=True    
-if t in string.digits         : s=True                                         # numbers only
+c=0
+if          s2 == 32       :   s = True                                        # a=string.count(s, sub[, start[, end]])
+elif        b2  > 4000     :   s = True                                        # want small BM only, less than 4KByte
+
+elif        b2 >= (3*5)    :   c=str.count(body, ' ', 1 , (3*5))               # both 3 *-  9++
+if           c == (3-1)    :   s=True                                          # group of 5 then space
+elif t[1*5]    ==' '       :   s=True     #FIXME ... 5 10 15                   # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
+
+
+if not s:
+    if   t[0]=='0' and t[-1] == '0'    : s=True                                    #  0...0 
+    elif t[0]=='1'                     : s=True                                    #FIXME
+    #print t[0]
+
+if not s:
+    if               t.isdigit()       : s=True    
+    elif t in     string.digits        : s=True                                    # numbers only
+
 
 spamstr = 'a SPAM:cat example word:cat!! wateva stuff this might be a spamtext'
 match = re.search(r'SPAM:\w\w\w', spamstr)
