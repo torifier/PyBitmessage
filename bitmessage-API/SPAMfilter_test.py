@@ -57,9 +57,10 @@ s=False # = SPAM
 
 b100='---'
 
-print "subj" ,  subject
 print " "
-print body
+print "subj is " ,  subject
+print " "
+print "body is " ,  body
 print " "
 
 #print string.octdigits
@@ -76,11 +77,16 @@ s=False # SPAM ? true or false
 c=0     # count
 
 #body='this is no spam mate sss 333'  #FIXME remove it
-s2=len(subject)
-b2=len(body)
 
-b100 =body[0:100]           # first 100 chars to test
-s= str.isspace(b100)        # only whitespace              s= b100.str.isspace()  
+if not s: s = subject.isdigit()                                                # numbers only
+
+if not s: 
+    s2=len(subject)
+    b2=len(body)
+
+if not s:
+    b100 =body[0:100]             # first 100 chars to test
+    s= str.isspace(b100)          # only whitespace                            s= b100.str.isspace()  
 
 if not s : 
     b100s=     b100.strip(None)   # ' '          # strip lead+end whitespace
@@ -120,7 +126,6 @@ if not s:
     if            s2 == 32           :   s = True  # FIXME kills too easily nonspam  # a=string.count(s, sub[, start[, end]])
     elif          b2  > 4000         :   s = True                                    # want small BM only, less than 4KByte
 
-if not s: s = subject.isdigit()                                                # numbers only
                                   
 if not s:
     b100  = 'a SPAMword    FIXME  remove this line after testing'
@@ -129,7 +134,7 @@ if not s:
 #   if     match : s=True      #print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
 #   else:          s=False     #print 'did not find SPAM:___'
 
-    print "regex true or false : " , match    
+    print "regex true or false : " , s    
     
 
                                                                                # end of SPAM evaluation
@@ -146,7 +151,8 @@ print " s = spamTrigger is --> " , s
 print " "
 if blockMessage       :     print 'msg blocked by SPAMfilter'
 elif not blockMessage :     print 'msg not blocked'
-
+print " "
+ 
                                                                                
 """
 regular expressions, re , regex :
