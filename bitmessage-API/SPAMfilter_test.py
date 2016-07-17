@@ -18,14 +18,14 @@ import re
 import string
 
 
-subject = 'some_SPAM_or_whatever eeeee EEEEEEEEEEE xxxx'
-body    = '11111 22222 33333 44444 55555'
+subject = 'subjectline-1 -- some_SPAM_or_whatever eeeee EEEEEEEEEEE xxxx'
+body    = 'body-1 11111 22222 33333 44444 55555'
 
 blockMessage = False
 
 # copy & paste real spam from BM to test filter with
 t='''
-THTWJ WLIRQ SPOVA GHGBM EDSPU GMWVB OLVKB XZXCX LCHIX UNNEP
+BODYB WLIRQ SPOVA GHGBM EDSPU GMWVB OLVKB XZXCX LCHIX UNNEP
 FWRLD TZEJC ULNLB KMVFW TKQVK PFUWY XXHJK MFEHF TMFXS PAYWC
 WRCYQ QCUEX NLXEG NYZQO MSPBM FCJCU YXOKE FUUFG CBSLJ QYZYT
 ITQBF KKYUJ OCAJH ZLLOC JDOAE PIILN ELKKA BYRCR YWNSZ OMODN
@@ -57,14 +57,20 @@ s=False # = SPAM
 
 
 print subject
+print " "
 print body
+print " "
 
 #print string.octdigits
 #print string.digits
 #print string.uppercase
 
 ################################### begin of filter regex part to put in       src/class_objectProcessor.py 
-s=False # = SPAM
+
+# USEROPTION SpamFilter   -  enable or disable any options by commenting them out with the letter '#'
+
+s=False # SPAM ? true or false
+c=0     # count
 
 s2=len(subject)
 b2=len(body)
@@ -75,45 +81,50 @@ b2=len(body)
 s3=str.upper   (subject)
 c=str.count    (s3, 'E') ## , 1 , (3*5))                                       # both 3 *-  9++
 p = c / s2
-if p < 0.05                  :     s=True                                      # 5% is too few 'E' for English, average is 13%
+if p < 0.05                   :     s=True                                     # 5% is too few 'E' for English, average is 13%
 print "percentage letter E is present "   , c 
 
-c=0
-if          s2 == 32       :   s = True                                        # a=string.count(s, sub[, start[, end]])
-elif        b2  > 4000     :   s = True                                        # want small BM only, less than 4KByte
 
-elif        b2 >= (3*5)    :   c=str.count(body, ' ', 1 , (3*5))               # both 3 *-  9++
-if           c == (3-1)    :   s=True                                          # group of 5 then space
-elif t[1*5]    ==' '       :   s=True     #FIXME ... 5 10 15                   # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
+if          s2 == 32           :   s = True                                    # a=string.count(s, sub[, start[, end]])
+elif        b2  > 4000         :   s = True                                    # want small BM only, less than 4KByte
+
+if not s:
+    if          b2 >= (3*5)    :   c=str.count(body, ' ', 1 , (3*5))           # both 3 *-  9++
+    if           c == (3-1)    :   s=True                                      # group of 5 then space
+    elif t[1*5]    ==' '       :   s=True     #FIXME ... 5 10 15               # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
 
 
 if not s:
-    if   t[0]=='0' and t[-1] == '0'    : s=True                                    #  0...0 
-    elif t[0]=='1'                     : s=True                                    #FIXME
-    #print t[0]
+    if   t[0]=='0' and t[-1] == '0'    : s=True                                #  0...0 
+    elif t[0]=='1'                     : s=True                                #FIXME
+    #print t[0] 
 
 if not s:
     if               t.isdigit()       : s=True    
-    elif t in     string.digits        : s=True                                    # numbers only
+    elif t in     string.digits        : s=True                                # numbers only
 
-
-spamstr = 'a SPAM:cat example word:cat!! wateva stuff this might be a spamtext'
-match = re.search(r'SPAM:\w\w\w', spamstr)
+if not s:
+    s3 = 'a SPAM:cat example word:cat!! whatever... stuff this might be a spamtext'
+    match = re.search(r'SPAM:\w\w\w', s3)
                                                                                # after search() tests if it succeeded     \w  means  A-z  (word char)
-if     match: print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
-else:         print 'did not find SPAM:___'
+    if     match:  s=True      #print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
+    else:          s=False     #print 'did not find SPAM:___'
 
+    print "regex true or false : " , match    
+    
 
-SPAM=s                                                                         # end of eval
-if SPAM:
-    subject="SPAMfilter kicked in here " + subject
-    subject=''                           # delete or just prefix
-    body=''
+                                                                               # end of SPAM evaluation
+if  s:    # SPAM was found
+    subject="SPAMfilter kicked in here " + subject                             # prefix subject line
+#   subject=''                                                                 # delete subject line or just prefix
+#   body=''                                                                    # delete body
     blockMessage = True
-###############################################################                # end of filter regex
+###############################################################                # end of filter regex to copy & paste
 
-print subject
-
+print "subj: " , subject
+print " "
+print " s = spamTrigger is --> " , s
+print " "
 if blockMessage       :     print 'msg blocked by SPAMfilter'
 elif not blockMessage :     print 'msg not blocked'
 
