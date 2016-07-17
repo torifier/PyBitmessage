@@ -2,7 +2,7 @@
 from __future__ import division
 # -*- coding: utf-8 -*-
 '''
-  Torifier's spam filter test tool  
+  Torifier's spam filter test tool
 
 
 https://github.com/torifier/PyBitmessage/blob/torifier-spamfilter/bitmessage-API/SPAMfilter_test.py
@@ -81,16 +81,16 @@ t2=str.upper   (subject)
 a=str.count    (t2, 'E') ## , 1 , (3*5))                                       # both 3 *-  9++
 b=len          (t2)
 c = a / b
-if c < 0.05                  :     s=True                                      # 5% is too few 'E' for English, avergage is 13%
-print "percent of letter E =", c 
+if c < 0.05                  :     s=True                                      # 5% is too few 'E' for English, average is 13%
+print "percentage letter E is present "   , c 
 
                                                                                #   if a not ~ 13% E in msg
 if t[0]=='0' and t[-1] == '0' :    s=True                                      #  0...0 
-if t[0]=='1'                  :    s=True
+if t[0]=='1'                  :    s=True                                      #FIXME
  
 print t[0]
-if t.isdigit(): s=True    
-if t in string.digits: s=True
+if t.isdigit()                : s=True    
+if t in string.digits         : s=True                                         # numbers only
 
 spamstr = 'a SPAM:cat example word:cat!! wateva stuff this might be a spamtext'
 match = re.search(r'SPAM:\w\w\w', spamstr)
@@ -109,11 +109,8 @@ if SPAM:
 
 print subject
 
-if blockMessage :
-    print 'msg blocked by SPAMfilter'
-elif not blockMessage :
-    print 'msg not blocked'
-
+if blockMessage       :     print 'msg blocked by SPAMfilter'
+elif not blockMessage :     print 'msg not blocked'
 
                                                                                
 """
