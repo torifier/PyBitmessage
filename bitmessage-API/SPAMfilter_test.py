@@ -10,13 +10,13 @@ https://github.com/torifier/PyBitmessage/blob/torifier-spamfilter/bitmessage-API
 https://beamstat.com/chan/general
 
   insert filter part after   line 507+    in  pyBitmessage   src/class_objectProcessor.py 
-  but the 2. and 3. line are necessary too (i.e. import, coding)
+  but the 2. and 3. line are necessary too  i.e. import, coding
 
 '''
 
 
 import re
-import string
+import string  
 
 
 subject = 'subjectline-1 -- some_SPAM_or_whatever eeeee EEEEEEEEEEE xxxx cut off at 500 or so'
@@ -45,7 +45,7 @@ ZTNFL TNCFB FPIOP FGQAS YRLZS SHBMV NUQIW FKXNJ QMPVS TCGVJ
 TKJOP DUYQM NNKWZ KPNHZ VTZLT JGUPB LEGKZ WATEV AWHAT EVER0
 '''
 
-t="t nothing"                                                               # text to filter now
+t="t nothing"                                                                    # text to filter now
 
 #print t
 
@@ -78,7 +78,7 @@ print " "
 s=False # SPAM ? true or false
 c=0     # count
 
-if not s: s = subject.isdigit()                                                  # numbers only
+if not s: s = subject.isdigit()                                                  # numbers only, a common BM SPAM format for a while
 
 #                     isupper()                                                  # catch CAPS SPAM   and len > 20  
 
@@ -87,17 +87,17 @@ if not s:
     b2=len(body)
 
 if not s:
-    b100 =body[0:100]                                                            # first 100 chars to test
-    s= str.isspace(b100)                                                         # only whitespace s= b100.str.isspace()  
+    b100 =body[0:100]                                                            # first 100 chars to test for performance reasons. Increase to your liking!
+    s= str.isspace(b100)                                                         # only whitespace?         s= b100.str.isspace()  
 
 if not s : 
     b100s=     b100.strip(None)   # ' '                                          # strip lead+end whitespace
-    s =        b100s.isdigit()                                                   # pure number spam without SPACE
+    s =        b100s.isdigit()                                                   # pure number spam without SPACE remaining after stripping?
     if not s :
-        b100s=     b100.replace(' ', '')                                         # kill whitespace
-        s =        b100s.isdigit()                                               # number spam with SPACEs  +
+        b100s=     b100.replace(' ', '')                                         # kill whitespace to possibly find:
+        s =        b100s.isdigit()                                               # number spam with SPACEs               +
         if not s : 
-            if b100s.isupper() and b2 > 30 : s=True                              # uppercase SPAM e.g. A1 
+            if b100s.isupper() and b2 > 30 : s=True                              # uppercase SPAM e.g. A1   or  ASSUZTGFGHZUJTHZTGWEHRJUZHTG more than 30 letters
 
 # if not s:                                                                      # FIXME filter cyrillic & China charsets
 
@@ -106,39 +106,39 @@ if not s:
     s3=str.upper    (subject)
     c =str.count    (s3, 'E')                             
     p = c / s2
-    if p < 0.05 and s2 > 20        :     s=True                                  # 5% is too few 'E' for English, average is 13%
+    if p < 0.05 and s2 > 20        :     s=True                                  # 5% is too few letters 'E' for English, average is ~ 13%
     print "percentage letter E is present "   , c 
 
 if not s:
-    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # both 3 *  9++   -- if min len = 50 char ,  uppercase body
-    if             c ==  3       :   s=True                                      # group of 5 then space = length of 6  --- 3 groups with 3 whhitespaces
+    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # 3 groups of 6 letters tested ; increase, if You like.  FIXME min len = 50 char of msg-body??
+    if             c ==  3       :   s=True                                      # group of 5 then space = length of 6  --- 3 groups with exactly 3 whhitespaces
     if s:
-        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 11 17  inc(6) 3-->9  #  groups of 5 char + SPACE
+        if b100[5] != ' ' or b100[11] != ' ' or b100[17] !=  ' ' : s=False       # 3 groups tested: 5 11 17 inc(6) 3-->9  5 char then SPACE , a common SPAM format!
                            #      +6
 if not s:
-    if   subject[0]  =='0' and subject[-1] == '0'    : s=True                    #  0...0 
-    elif subject[0]  =='}'                           : s=True                    # FIXME kills non spam
-    elif subject[0:5]=='::cp::'                      : s=True                    # FIXME token for c-porn
+    if   subject[0]  =='0' and subject[-1] == '0'    : s=True                    # 0...0 actually quite an arbitrary filter. Comment out if you wish with #
+    elif subject[0]  =='}'                           : s=True                    # FIXME kills non spam   } as first character alone will kill a BM 
+    elif subject[0:5]=='::cp::'                      : s=True                    # FIXME token for c-porn - is it ever gonna happen ?
 
-                                                                                 # print t[0] 
+                                                                                 # print t[0]  during testing with Spyder python GUI
 if not s:
-    if            s2 ==   32         :   s = True                                # FIXME kills nonspam too easily # a=string.count(s, sub[, start[, end]])
-    elif          b2  > 4000         :   s = True                                # want small BM only, less than 4000 Byte
+    if            s2 ==   32         :   s = True                                # FIXME kills nonspam too easily!   # a=string.count(s, sub[, start[, end]])
+    elif          b2  > 4000         :   s = True                                # want small BM only, less than 4000 letters, thank you very much!
 
 if not s:
-    b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME                
+    b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
     found = re.search(r'SPAM\w\w\w', b100)                                       # search a spam regex                
-    if     found : s = True                                                      # after search() tests if it succeeded     \w  means  A-z  (word char)                
+    if     found : s = True                                                      # after search() tests if it succeeded     \w  means  A-z  (word char)
 #   if     found : s=True      #print 'SPAM*** found'        , found.group()     # 'found SPAMabc'                
 #   else:          s=False     #print 'did not find SPAM***'
-    print "regex true or false : " , s                                           # FIXME remove after testing 3 lines                
+    print "regex true or false : " , s                                           # FIXME remove after testing those 3 lines for performance if you wish   
 
 
-                                                                                 # end of SPAM evaluation
+                                                                                 # End of SPAM evaluation - now the BM will be killed on individual SPAM policy.
 if  s:    # SPAM was found                                                       
     subject="SPAMfilter kicked in here " + subject                               # prefix subject line
 #   subject=''                                                                   # delete subject line or just prefix
-#   body=''                                                                      # FIXME remove the '#'                  # delete body
+#   body=''                                                                      # FIXME remove the '#' to actually delete body at python runtime
     blockMessage = True                                                          
 ###############################################################                    end of filter regex part to put in       src/class_objectProcessor.py 
 
