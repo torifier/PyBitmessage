@@ -113,8 +113,8 @@ if not s:
 
 
 if not s:
-    if            b2 >= (3*5)    :   c=str.count(b100, ' ', 1 , (3*5))           # both 3 *-  9++
-    if             c == (3-1)    :   s=True                                      # group of 5 then space
+    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # both 3 *-  9++
+    if             c == (3-1)    :   s=True                                      # group of 5 then space = 6
     if s:
         if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 10 15    3-->9      # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
                            #      +6
