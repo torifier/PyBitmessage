@@ -106,17 +106,17 @@ if not s :
 if not s:    
     #s3=string.upper(subject)
     s3=str.upper    (subject)
-    c =str.count    (s3, 'E') ## , 1 , (3*5))                                      # both 3 *-  9++
+    c =str.count    (s3, 'E')                             
     p = c / s2
-    if p < 0.05 and s2 > 20        :     s=True                                    # 5% is too few 'E' for English, average is 13%
+    if p < 0.05 and s2 > 20        :     s=True                                  # 5% is too few 'E' for English, average is 13%
     print "percentage letter E is present "   , c 
 
 
 if not s:
-    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # both 3 *-  9++
-    if             c == (3-1)    :   s=True                                      # group of 5 then space = 6
+    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # both 3 *-  9++   -- if min len = 50 char ,  uppercase body
+    if             c == (3-1)    :   s=True                                      # group of 5 then space = length of 6
     if s:
-        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 10 15    3-->9      # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
+        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 11 17  inc(6) 3-->9  # ... 5er Grp # 
                            #      +6
 if not s:
     if   subject[0]  =='0' and subject[-1] == '0'    : s=True                    #  0...0 
