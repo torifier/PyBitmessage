@@ -10,8 +10,6 @@ https://github.com/torifier/PyBitmessage/blob/torifier-spamfilter/bitmessage-API
 https://beamstat.com/chan/general
 
   insert filter part after   line 507+    in  pyBitmessage   src/class_objectProcessor.py 
-  
-  
   but the 2. and 3. line are necessary too (i.e. import, coding)
 
 '''
