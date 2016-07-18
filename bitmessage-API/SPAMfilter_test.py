@@ -120,10 +120,10 @@ if not s:
     elif subject[0]  =='}'                           : s=True                    # FIXME kills non spam
     elif subject[0:5]=='::cp::'                      : s=True                    # FIXME token for c-porn
 
-                                                                                                 # print t[0] 
+                                                                                 # print t[0] 
 if not s:
     if            s2 ==   32         :   s = True                                # FIXME kills nonspam too easily # a=string.count(s, sub[, start[, end]])
-    elif          b2  > 4000         :   s = True                                                # want small BM only, less than 4000 Byte
+    elif          b2  > 4000         :   s = True                                # want small BM only, less than 4000 Byte
 
 if not s:
     b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME                
