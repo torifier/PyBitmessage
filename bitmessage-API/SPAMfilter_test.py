@@ -10,6 +10,9 @@ https://github.com/torifier/PyBitmessage/blob/torifier-spamfilter/bitmessage-API
 https://beamstat.com/chan/general
 
   insert filter part after   line 507+    in  pyBitmessage   src/class_objectProcessor.py 
+  
+  
+  but the 2. and 3. line are necessary too (i.e. import, coding)
 
 '''
 
@@ -18,8 +21,8 @@ import re
 import string
 
 
-subject = 'subjectline-1 -- some_SPAM_or_whatever eeeee EEEEEEEEEEE xxxx'
-body    = 'Gr1----11 22222 33333 44444 55555 SPAMwordwww'
+subject = 'subjectline-1 -- some_SPAM_or_whatever eeeee EEEEEEEEEEE xxxx cut off at 500 or so'
+body    = 'Gr1----11 22222 33333 44444 55555 SPAMwordwww  00000000000000000000000000000000000'
 
 blockMessage = False
 
@@ -113,10 +116,10 @@ if not s:
 
 
 if not s:
-    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # both 3 *-  9++   -- if min len = 50 char ,  uppercase body
-    if             c ==  3       :   s=True                                      # group of 5 then space = length of 6
+    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # both 3 *  9++   -- if min len = 50 char ,  uppercase body
+    if             c ==  3       :   s=True                                      # group of 5 then space = length of 6  --- 3 groups with 3 whhitespaces
     if s:
-        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 11 17  inc(6) 3-->9  # ... 5er Grp # 
+        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 11 17  inc(6) 3-->9  #  groups of 5 char + SPACE
                            #      +6
 if not s:
     if   subject[0]  =='0' and subject[-1] == '0'    : s=True                    #  0...0 
