@@ -76,9 +76,10 @@ print " "
 s=False # SPAM ? true or false
 c=0     # count
 
-#body='this is no spam mate sss 333'  #FIXME remove it
-
 if not s: s = subject.isdigit()                                                # numbers only
+
+#                     isupper()       # catch CAPS SPAM   and len > 20  
+
 
 if not s: 
     s2=len(subject)
@@ -95,7 +96,7 @@ if not s :
         b100s=     b100.replace(' ', '')         # kill whitespace
         s =        b100s.isdigit()               # number spam with SPACEs  +
         if not s : 
-            if b100s.isupper() : s=True          # all uppercase SPAM e.g. A1  FIXME   
+            if b100s.isupper() and b2 > 30 : s=True          # uppercase SPAM e.g. A1 
 
 
 #FIXME                                                                         # filter cyrillic & China charsets
@@ -107,7 +108,7 @@ if not s:
     s3=str.upper    (subject)
     c =str.count    (s3, 'E') ## , 1 , (3*5))                                      # both 3 *-  9++
     p = c / s2
-    if p < 0.05 and s2 > 20        :     s=True                                     # 5% is too few 'E' for English, average is 13%
+    if p < 0.05 and s2 > 20        :     s=True                                    # 5% is too few 'E' for English, average is 13%
     print "percentage letter E is present "   , c 
 
 
@@ -115,11 +116,16 @@ if not s:
     if            b2 >= (3*5)    :   c=str.count(b100, ' ', 1 , (3*5))           # both 3 *-  9++
     if             c == (3-1)    :   s=True                                      # group of 5 then space
     if s:
-        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False     #FIXME ... 5 10 15    3-->9      # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
+        if b100[5] != ' ' or b100[11] != ' ' and b100[17] !=  ' ' : s=False      # 3 groups only -    5 10 15    3-->9      # ... 5er Grp  5 10 15 20 25 30 # if min len = 50 char ,  uppercase body
                            #      +6
 if not s:
-    if   subject[0]=='0' and subject[-1] == '0'    : s=True                    #  0...0 
-    elif subject[0]=='}'                           : s=True                    # FIXME kills non spam                             #FIXME
+    if   subject[0]  =='0' and subject[-1] == '0'    : s=True                    #  0...0 
+    elif subject[0]  =='}'                           : s=True                    # FIXME kills non spam
+    elif subject[0:5]=='::cp::'                      : s=True                    # FIXME token for c-porn
+
+
+
+
     #print t[0] 
 
 if not s:
@@ -129,9 +135,9 @@ if not s:
                                   
 if not s:
     b100  = 'a SPAMword    FIXME  remove this line after testing'
-    match = re.search(r'SPAM\w\w\w', b100)
-    if     match : s = True                                                                               # after search() tests if it succeeded     \w  means  A-z  (word char)
-#   if     match : s=True      #print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
+    found = re.search(r'SPAM\w\w\w', b100)                                                       # search a spam regex
+    if     found : s = True                                                                      # after search() tests if it succeeded     \w  means  A-z  (word char)
+#   if     found : s=True      #print 'SPAM:___ found', match.group()                            # 'found SPAM:abc'
 #   else:          s=False     #print 'did not find SPAM:___'
 
     print "regex true or false : " , s    
@@ -141,7 +147,7 @@ if not s:
 if  s:    # SPAM was found
     subject="SPAMfilter kicked in here " + subject                             # prefix subject line
 #   subject=''                                                                 # delete subject line or just prefix
-#   body=''             #  FIXME remove #                                                       # delete body
+#   body=''             #  FIXME remove the '#'                                # delete body
     blockMessage = True
 ###############################################################                # end of filter regex to copy & paste
 
