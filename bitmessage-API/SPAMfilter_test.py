@@ -138,7 +138,7 @@ if not s:
 if  s:    # SPAM was found                                                       
     subject="SPAMfilter kicked in here " + subject                               # prefix subject line
 #   subject=''                                                                   # delete subject line or just prefix
-#   body=''                                                                      #  FIXME remove the '#'                  # delete body
+#   body=''                                                                      # FIXME remove the '#'                  # delete body
     blockMessage = True                                                          
 ###############################################################                    end of filter regex part to put in       src/class_objectProcessor.py 
 
