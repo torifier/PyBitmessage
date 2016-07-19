@@ -49,11 +49,9 @@ t="t nothing"                                                                   
 
 #print t
 
-a=0
-b=0
-c=0
-s2=0    # len subj
-p=0.0
+c=0     # count
+sl=0    # subject line length
+p=0.0   # percentage
 s=False # = SPAM
 
 b100='---'
@@ -76,8 +74,8 @@ if not s: s = subject.isdigit()                                                 
 #                     isupper()                                                  # catch CAPS SPAM   and length > 20  
 
 if not s: 
-    s2=len(subject)
-    b2=len(body)
+    sl=len(subject)
+    bl=len(body)
 
 if not s:
     b100 =body[0:100]                                                            # first 100 chars to test for performance reasons. Increase to your liking!
@@ -95,15 +93,15 @@ if not s :
 # if not s:                                                                      # FIXME filter cyrillic & China charsets
 
 if not s:    
-    #s3=string.upper(subject)
-    s3=str.upper    (subject)
-    c =str.count    (s3, 'E')                             
-    p = c / s2
-    if p < 0.05 and s2 > 20        :     s=True                                  # 5% is too few letters 'E' for English, average is ~ 13%
-    print "\n percentage letter E is present is "   , c , "% "                     # FIXME remove (#) this line in production version
+   #su=string.upper(subject)
+    su=str.upper    (subject)
+    c =str.count    (su, 'E')                             
+    p = c / sl
+    if p < 0.05 and sl > 20                : s=True                              # 5% is too few letters 'E' for English, average is ~ 13%
+    print "\n percentage letter E is present is "   , c , "% "                   # FIXME remove (#) this line in production version
 
 if not s:
-    if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # 3 groups of 6 letters tested ; increase, if You like.  FIXME min len = 50 char of msg-body??
+    if            bl >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # 3 groups of 6 letters tested ; increase, if You like.  FIXME min len = 50 char of msg-body??
     if             c ==  3       :   s=True                                      # group of 5 then space = length of 6  --- 3 groups with exactly 3 whhitespaces
     if s:
         if b100[5] != ' ' or b100[11] != ' ' or b100[17] !=  ' ' : s=False       # 3 groups tested: 5 11 17 inc(6) 3-->9  5 char then SPACE , a common SPAM format!
@@ -115,8 +113,8 @@ if not s:
 
                                                                                  # print t[0]  during testing with Spyder python GUI
 if not s:
-    if            s2 ==   32         :   s = True                                # FIXME kills nonspam too easily!   # a=string.count(s, sub[, start[, end]])
-    elif          b2  > 4000         :   s = True                                # want small BM only, less than 4000 letters, thank you very much!
+    if            sl ==   32         :   s = True                                # FIXME kills nonspam too easily!   # a=string.count(s, sub[, start[, end]])
+    elif          bl  > 4000         :   s = True                                # want small BM only, less than 4000 letters, thank you very much!
 
 if not s:
     b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
