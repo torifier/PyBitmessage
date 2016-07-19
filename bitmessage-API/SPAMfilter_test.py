@@ -58,19 +58,12 @@ s=False # = SPAM
 
 b100='---'
 
-print " "
-print "subj is " ,  subject
-print " "
-print "body is " ,  body
-print " "
+print "\n subj is: " ,  subject
+print "\n body is: " ,  body
 
-#print string.octdigits
-#print string.digits
-#print string.uppercase
+#print    string.octdigits , string.digits  , string.uppercase
 
-
-
-###################################                                              begin of filter regex part to put in       src/class_objectProcessor.py 
+###################################                                                begin of filter regex part to put in       src/class_objectProcessor.py 
 
 # USEROPTION SpamFilter   -   enable or disable any options 
 #                             by commenting them out with the letter '#'
@@ -80,7 +73,7 @@ c=0     # count
 
 if not s: s = subject.isdigit()                                                  # numbers only, a common BM SPAM format for a while
 
-#                     isupper()                                                  # catch CAPS SPAM   and len > 20  
+#                     isupper()                                                  # catch CAPS SPAM   and length > 20  
 
 if not s: 
     s2=len(subject)
@@ -107,7 +100,7 @@ if not s:
     c =str.count    (s3, 'E')                             
     p = c / s2
     if p < 0.05 and s2 > 20        :     s=True                                  # 5% is too few letters 'E' for English, average is ~ 13%
-    print "percentage letter E is present "   , c 
+    print "\n percentage letter E is present is "   , c , "% "                     # FIXME remove (#) this line in production version
 
 if not s:
     if            b2 >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # 3 groups of 6 letters tested ; increase, if You like.  FIXME min len = 50 char of msg-body??
@@ -129,9 +122,9 @@ if not s:
     b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
     found = re.search(r'SPAM\w\w\w', b100)                                       # search a spam regex                
     if     found : s = True                                                      # after search() tests if it succeeded     \w  means  A-z  (word char)
-#   if     found : s=True      #print 'SPAM*** found'        , found.group()     # 'found SPAMabc'                
-#   else:          s=False     #print 'did not find SPAM***'
-    print "regex true or false : " , s                                           # FIXME remove after testing those 3 lines for performance if you wish   
+#   if     found : s=True      #print '\n SPAM*** found'        , found.group()  # 'found SPAMabc'                
+#   else:          s=False     #print '\n did not find SPAM***'
+    print "\n regex true or false : " , s                                        # FIXME remove after testing those 3 lines for performance if you wish   
 
 
                                                                                  # End of SPAM evaluation - now the BM will be killed on individual SPAM policy.
@@ -142,13 +135,10 @@ if  s:    # SPAM was found
     blockMessage = True                                                          
 ###############################################################                    end of filter regex part to put in       src/class_objectProcessor.py 
 
-print "subj: " , subject
-print " "
-print " s = spamTrigger is --> " , s
-print " "
-if blockMessage       :     print 'msg blocked by SPAMfilter'
-elif not blockMessage :     print 'msg not blocked'
-print " "
+print "\n subj: " , subject
+print "\n s = spamTrigger is --> " , s , " \n "
+if blockMessage       :     print '\n msg blocked by SPAMfilter \n'
+elif not blockMessage :     print '\n msg not blocked \n'
  
                                                                                
 """
