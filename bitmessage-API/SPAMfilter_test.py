@@ -11,6 +11,8 @@ https://beamstat.com/chan/general
 
   insert filter part after   line 507+    in  pyBitmessage   src/class_objectProcessor.py 
   but the 2. and 3. line are necessary too  i.e. import, coding
+  Once inserted into pyBitmessage thus, the live spamfilter does not filter spam which you yourself posted to a chan
+  locally. To test the *live* filter, you must post test spam from a secondary computer. Or just use this offline test tool instead.
 
 '''
 
@@ -44,17 +46,15 @@ VAORS SDFHT HIBCO MPKFT WWVWC WFOGN GUHYB AONXQ GONAP KELVJ
 ZTNFL TNCFB FPIOP FGQAS YRLZS SHBMV NUQIW FKXNJ QMPVS TCGVJ
 TKJOP DUYQM NNKWZ KPNHZ VTZLT JGUPB LEGKZ WATEV AWHAT EVER0
 '''
-
-t="t nothing"                                                                    # text to filter now
-
 #print t
-
-c=0     # count
-sl=0    # subject line length
-p=0.0   # percentage
-s=False # = SPAM
-
+t="t nothing"                                                                    # text to filter now
 b100='---'
+
+c =0     # count
+sl=0     # subject line length
+bl=0     # body length
+p =0.0   # percentage of 'E' in SPAM
+s =False # SPAM ? true or false
 
 print "\n subj is: " ,  subject
 print "\n body is: " ,  body
@@ -94,11 +94,11 @@ if not s :
 
 if not s:    
    #su=string.upper(subject)
-    su=str.upper    (subject)
-    c =str.count    (su, 'E')                             
+    su=str.upper   (subject)
+    c =str.count   (su, 'E')                             
     p = c / sl
-    if p < 0.05 and sl > 20                : s=True                              # 5% is too few letters 'E' for English, average is ~ 13%
-    print "\n percentage letter E is present is "   , c , "% "                   # FIXME remove (#) this line in production version
+    if p < 0.05 and sl > 20                          : s = True                  # 5% is too few letters 'E' for English, average is ~ 13%
+    print "\n percentage letter E occurance = "   , c , "% "                     # FIXME remove (#) this line in production version
 
 if not s:
     if            bl >= (3*6)    :   c=str.count(b100, ' ', 1 , (3*6))           # 3 groups of 6 letters tested ; increase, if You like.  FIXME min len = 50 char of msg-body??
@@ -107,15 +107,16 @@ if not s:
         if b100[5] != ' ' or b100[11] != ' ' or b100[17] !=  ' ' : s=False       # 3 groups tested: 5 11 17 inc(6) 3-->9  5 char then SPACE , a common SPAM format!
                            #      +6
 if not s:
-    if   subject[0]  =='0' and subject[-1] == '0'    : s=True                    # 0...0 actually quite an arbitrary filter. Comment out if you wish with #
-    elif subject[0]  =='}'                           : s=True                    # FIXME kills non spam   } as first character alone will kill a BM 
-    elif subject[0:5]=='::cp::'                      : s=True                    # FIXME token for c-porn - is it ever gonna happen ?
+    if   subject[0]  =='0' and subject[-1] == '0'    : s = True                  # 0...0 actually quite an arbitrary filter. Comment out if you wish with #
+    elif subject[0]  =='}'                           : s = True                  # FIXME kills non spam   } as first character alone will kill a BM 
+    elif subject[0:5]=='::cp::'                      : s = True                  # FIXME token for c-porn - is it ever gonna happen ?
 
                                                                                  # print t[0]  during testing with Spyder python GUI
 if not s:
-    if            sl ==   32         :   s = True                                # FIXME kills nonspam too easily!   # a=string.count(s, sub[, start[, end]])
-    elif          bl  > 4000         :   s = True                                # want small BM only, less than 4000 letters, thank you very much!
-
+    if            sl ==   40                         : s = True                  # FIXME  40 is decodable - kills nonspam too easily!   # a=string.count(s, sub[, start[, end]])
+    elif          bl  > 4000                         : s = True                  # want small BM only, less than 4000 letters, thank you very much!
+    elif          bl  <    2                         : s = True                  # 1 or zero letter spam
+                                                                                 # idea : decode sl-40 msg & prefix , put code at bottom , use ::spam-40:: token to trigger decode
 if not s:
     b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
     found = re.search(r'SPAM\w\w\w', b100)                                       # search a spam regex                
@@ -135,8 +136,8 @@ if  s:    # SPAM was found
 
 print "\n subj: " , subject
 print "\n s = spamTrigger is --> " , s , " \n "
-if blockMessage       :     print '\n msg blocked by SPAMfilter \n'
-elif not blockMessage :     print '\n msg not blocked \n'
+if       blockMessage :     print '\n msg     blocked by SPAMfilter \n'
+elif not blockMessage :     print '\n msg not blocked               \n'
  
                                                                                
 """
