@@ -1,5 +1,8 @@
 from __future__ import division
 # -*- coding: utf-8 -*-
+import re   # add these 3 lines into TOP-part of  src/class_objectProcessor.py      1. from   2. coding   3. imp re
+
+
 
 import time
 import threading
