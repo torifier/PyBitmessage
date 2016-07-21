@@ -63,10 +63,10 @@ class Ui_aboutDialog(object):
         QtCore.QMetaObject.connectSlotsByName(aboutDialog)
 
     def retranslateUi(self, aboutDialog):
-        aboutDialog.setWindowTitle("Torifier's pyBM fork")           #_translate("aboutDialog", "About", None))
-        self.label.setText("PyBitmessage , the torifier fork.")      #_translate("aboutDialog", "PyBitmessage forked by Torifier", None))
+        aboutDialog.setWindowTitle(_translate("aboutDialog", "About", None))  #"Torifier's pyBM fork")           #
+        self.label.setText(_translate("aboutDialog", "PyBitmessage forked by Torifier", None)) # "PyBitmessage , the torifier fork.")      #
         self.labelVersion.setText(_translate("aboutDialog", "version ?", None))
         self.label_2.setText(_translate("aboutDialog", "<html><head/><body><p>Torifier's pyBM fork.    Copyright © 2012-2016 Jonathan Warren<br/>Copyright © 2013-2016 The Bitmessage Developers</p></body></html>", None))
         self.label_3.setText(_translate("aboutDialog", "<html><head/><body><p>Distributed under the MIT/X11 software license; see <a href=\"http://www.opensource.org/licenses/mit-license.php\"><span style=\" text-decoration: underline; color:#0000ff;\">http://www.opensource.org/licenses/mit-license.php</span></a></p></body></html>", None))
-        self.label_5.setText(_translate("aboutDialog", "This is Beta software. forked by torifier for spam filter & usability  ", None))
+        self.label_5.setText(_translate("aboutDialog", "Forked by torifier for spam filter & usability.  This is Beta software. ", None))
 
