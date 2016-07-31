@@ -104,7 +104,7 @@
                                                                                          #        use ::spam-40:: token to trigger decode
         if not s:
             b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
-            found = re.search       (r'SPAMxxxx\w\w\w', b100)                                   # search a spam regex                
+            found = re.search       (r'SPAMxxxx\w\w\w', b100)                            # search a spam regex                
             if     found : 
                 s = True  
                 criterion = " regexpr. SPAMxxxx\w\w\w - "
