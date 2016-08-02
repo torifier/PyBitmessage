@@ -87,10 +87,10 @@ if not s:
   
         '''
 
-                                                                                         # b2 bl err crit
+                                                                                         
         criterion = " none - "
 
-                                                                                         # 5er                 isdigit zu viele
+                                                                                         # count E percentage
         
         s=False # SPAM ? true or false
         c=0     # count
