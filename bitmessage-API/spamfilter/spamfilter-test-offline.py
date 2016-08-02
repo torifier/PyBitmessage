@@ -2,8 +2,11 @@
 from __future__ import division
 # -*- coding: utf-8 -*-
 '''
-  Torifier's spam filter test tool
-https://github.com/torifier/PyBitmessage/blob/torifier-spamfilter/bitmessage-API/SPAMfilter_test.py
+  Torifier's spam filter offline test tool
+  
+  to test new filter settings without pyBM running
+  
+https://github.com/torifier/PyBitmessage/tree/master/bitmessage-API/spamfilter
 https://beamstat.com/chan/general
   insert filter part after   line 507+    in  pyBitmessage   src/class_objectProcessor.py 
   but the 2. and 3. line are necessary too  i.e. import, coding
