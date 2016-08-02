@@ -7,6 +7,13 @@ file /pyBitmessage__torifier/src/class_objectProcessor.py patched   to add a spa
 
 to modify your pyBM , just (backup and) replace the original class_objectProcessor.py with this patched class_objectProcessor.py
 Also delete class_objectProcessor.pyc , it will be recompiled.
+
+
+release site:
+https://github.com/torifier/PyBitmessage/tree/master/bitmessage-API/spamfilter
+
+
+
 '''
 
 
