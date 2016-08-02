@@ -1,8 +1,8 @@
 
 
 
-###########################################
-        ###################################                                                begin of filter regex part to put in       src/class_objectProcessor.py 
+
+        ################################### begin of filter regex part to put in       src/class_objectProcessor.py 
         # USEROPTION SpamFilter   -   enable or disable any options 
         #                             by commenting them out with the letter '#'
         # test spamfilter with provided tool     /bitmessage-API/spamfilter/spamfilter-test-offline.py
