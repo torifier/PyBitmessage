@@ -571,16 +571,12 @@ class objectProcessor(threading.Thread):
   
         '''
 
-                                                                                         # b2 bl err crit
-        criterion = " none - "
+        criterion = " none - "                                                           # re
 
-                                                                                         # 5er                 isdigit zu viele
-        
         s=False # SPAM ? true or false
         c=0     # count
 
 
-        
         if not s: 
             sl=len(subject)
             bl=len(body)
@@ -593,7 +589,7 @@ class objectProcessor(threading.Thread):
             if not s : s = subject.isdigit()                                             # numbers only, a common BM SPAM format for a while
             if s :  criterion  = " isdigit - "
         
-            if not s : s = subject.isupper()                                             # catch CAPS SPAM   and length > 20  
+            if not s : s = subject.isupper()                                             # catch CAPS SPAM   and s length > 5
             if s : criterion   = " isupper - "
 
 
@@ -635,15 +631,30 @@ class objectProcessor(threading.Thread):
 
 
 
-        if not s and bl > 30 :
-            bu=str.upper   (b100)
-            c =str.count   (bu, 'E')   
-            if sl <> 0:								  	 # div by zero
-	        p   = c / sl
-            else: p = 0.999					                         # / 0			 
-            if    p < 0.012  :                                                           # 1.2 % E in body longer than 30 chars
-                s = True                                                                 # 1.2 % is too few letters 'E' for English, average is ~ 13% 
-                if s : criterion = " body E = " + str(p) + " % - " 
+        #if not s and bl > 30 :
+            #bu=str.upper   (b100)
+            #c =str.count   (bu, 'E')   
+            #if bl <> 0:								 # div by zero
+	        #p   = c / sl
+            #else: p = 0.999					                         # / 0			 
+            #if    p < 0.012  :                                                          # 1.2 % E in body longer than 30 chars
+                #s = True                                                                # 1.2 % is too few letters 'E' for English, average is ~ 13% 
+                #if s : criterion = " body E = " + str(p) + " % - "                      # 1.25% one E in 80 char
+
+
+
+        if not s and bl > 30 :                                                           # one E in 30 letters in body
+            b100u=str.upper   (b100)
+            c    =str.count   (b100u, 'E')   
+            if c < 1 :                                                                   # minimum = one E in body longer than 30 chars
+                s = True                                   
+                if s : criterion = " body100 without E - "                               # 1.25% one E in 80 char
+
+
+
+
+
+
 
 
 
@@ -670,26 +681,25 @@ class objectProcessor(threading.Thread):
 
         if not s:
             if sl > 0 :
-                if   subject[0]  =='0' and subject[-1] == '0'    : s = True              # 0...0 actually quite an arbitrary filter. Comment out if you wish with #
-                elif subject[0]  =='}'                           : s = True              # FIXME kills non spam   } as first character alone will kill a BM 
-                elif subject[0:5]=='::cp::'                      : s = True   
-                                                                                         # FIXME token for c-porn - is it ever gonna happen ?
-                if s : criterion = " 00 } ::token::  - "
+#               if   subject[0]  =='0' and subject[-1] == '0'    : s = True              # 0...0 actually quite an arbitrary filter. Comment out if you wish with #
+#               elif subject[0]  =='}'                           : s = True              # FIXME kills non spam   } as first character alone will kill a BM 
+                if   subject[0:5]== '::cp::'                     : s = True              # FIXME token for c-porn - is it ever gonna happen ?                                                                                         
+                if s : criterion = " ::token::  - "                                      # 0...0  and  }   deactivated
 
 
 
                                                                                          # print t[0]  during testing with Spyder python GUI
         if not s:
 #           if            sl        ==          40               : s = True              # FIXME  40 is decodable - kills nonspam too easily!   
-            if                   bl  >        8000               : s = True              # want small BM only, less than 4000 letters, thank you very much!
-#           elif                 bl ==      0                    : s = True              # 1 or zero letter spam                                                                                         
+            if                   bl  >        8000               : s = True              # want small BM only, less than 8000 letters, thank you very much!
+#           elif                 bl ==      0                    : s = True              # 1 or zero letter spam  - subject line only , maybe nonspam                                                                                      
             if s : criterion = " bl length >  8000 "                                     # a=string.count(s, sub[, start[, end]])
 
 
                                                                                          # idea : decode sl-40 msg & prefix , put code at bottom , 
                                                                                          #        use ::spam-40:: token to trigger decode
         if not s:
-            b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
+#           b100  = 'a SPAMword    FIXME  comment / remove this line after testing'      # FIXME we need improved SPAMword finder REGEX that trigger on **** stuff and whatever
             found = re.search       (r'SPAMxxxx\w\w\w', b100)                            # search a spam regex                
             if     found : 
                 s = True  
@@ -701,7 +711,7 @@ class objectProcessor(threading.Thread):
         
                                                                                          # End of SPAM evaluation - now the BM will be killed on individual SPAM policy.
         if  s:      # SPAM was found                                                       
-            subject="{sf. " + criterion + subject                                         # prefix subject line with  'sf. ' or a prefix of your choosing
+            subject="{sf. " + criterion + subject                                        # prefix subject line with  'sf. ' or a prefix of your choosing
         #   subject=''                                                                   # delete subject line or just prefix
         #   body=''                                                                      # FIXME remove the '#' to actually delete body at python runtime
             blockMessage = False # = demo mode                                           # True = Block-Mode , msg disappears totally from messagbebase             
